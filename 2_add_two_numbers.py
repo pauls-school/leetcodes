@@ -8,18 +8,25 @@ class Solution:
         node1 = l1
         node2 = l2
         sum_ll = ListNode()
-        list1 = []
-        list2 = []
+        node = sum_ll
+        extra = 0
         while node1 or node2:
             if node1 and node2:
-                list1.insert(0, node1.val)
-                list2.insert(0, node2.val)
+                node.next = ListNode(node1.val + node2.val + extra)
                 node1 = node1.next
                 node2 = node2.next
             elif node1:
-                return ListNode(69)
+                node.next = ListNode(node1.val + extra)
+                node1 = node1.next
             elif node2:
-                return ListNode(69)
-            print(list1, list2)
-            # node1 = node1.next
-            # node2 = node2.next
+                node.next = ListNode(node2.val + extra)
+                node2 = node2.next
+            node = node.next
+            if node.val >= 10:
+                node.val -= 10
+                extra = 1
+            else:
+                extra = 0
+        if extra == 1:
+            node.next = ListNode(1)
+        return sum_ll.next
